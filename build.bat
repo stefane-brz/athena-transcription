@@ -13,12 +13,17 @@ pip install pyinstaller
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 echo.
-echo 2. Téléchargement du modèle Whisper...
+echo 2. Vérification PyQt5...
+python -c "from PyQt5.QtWidgets import QApplication; print('PyQt5 OK')"
+if %errorlevel% neq 0 exit /b %errorlevel%
+
+echo.
+echo 3. Téléchargement du modèle Whisper...
 python -c "from huggingface_hub import snapshot_download; snapshot_download('Systran/faster-whisper-small', cache_dir='hf_home')"
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 echo.
-echo 3. Build avec PyInstaller...
+echo 4. Build avec PyInstaller...
 pyinstaller --onefile --windowed --name "AthenaT" ^
     --add-data "hf_home;hf_home" ^
     --collect-all PyQt5 ^
