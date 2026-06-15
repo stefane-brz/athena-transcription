@@ -39,7 +39,7 @@ jobs:
         run: |
           pyinstaller --onefile --windowed --name "AthenaT" ^
             --add-data "hf_home;hf_home" ^
-            --hidden-import PyQt5.sip ^
+            --collect-all PyQt5 ^
             --hidden-import ctranslate2 ^
             --hidden-import faster_whisper ^
             --hidden-import tokenizers ^
