@@ -1,0 +1,42 @@
+name: Build Windows .exe
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Download Whisper model
+        run: python -c "from huggingface_hub import snapshot_download; snapshot_download('Systran/faster-whisper-small', cache_dir='hf_home')"
+
+      - name: Build with PyInstaller
+        run: |
+          pyinstaller --onefile --windowed --name "TaniaTranscription" `
+            --add-data "hf_home;hf_home" `
+            --hidden-import PyQt5.sip `
+            --hidden-import ctranslate2 `
+            --hidden-import faster_whisper `
+            --hidden-import tokenizers `
+            --collect-submodules faster_whisper `
+            app/app.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TaniaTranscription
+          path: dist/TaniaTranscription.exe
