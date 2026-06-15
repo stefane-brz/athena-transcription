@@ -6,11 +6,6 @@ echo ============================================
 echo.
 
 echo 1. Installation des dépendances...
-echo   1a. PyQt5 via wheel...
-python -m pip install PyQt5==5.15.11 PyQt5-Qt5==5.15.19 PyQt5_sip==12.18.0 --only-binary :all:
-if %errorlevel% neq 0 exit /b %errorlevel%
-
-echo   1b. Autres dépendances...
 pip install -r requirements.txt
 if %errorlevel% neq 0 exit /b %errorlevel%
 
