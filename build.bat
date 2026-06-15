@@ -22,6 +22,7 @@ echo 3. Build avec PyInstaller...
 pyinstaller --onefile --windowed --name "AthenaT" ^
     --add-data "hf_home;hf_home" ^
     --collect-all PyQt5 ^
+    --collect-all PyQt5-Qt5 ^
     --hidden-import ctranslate2 ^
     --hidden-import faster_whisper ^
     --hidden-import tokenizers ^
