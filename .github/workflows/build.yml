@@ -1,5 +1,8 @@
 name: Build AthenaT .exe
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   push:
     branches: [main]
@@ -30,6 +33,7 @@ jobs:
           python -c "from huggingface_hub import snapshot_download; snapshot_download('Systran/faster-whisper-small', cache_dir='hf_home')"
 
       - name: Build .exe with PyInstaller
+        shell: cmd
         run: |
           pyinstaller --onefile --windowed --name "AthenaT" ^
             --add-data "hf_home;hf_home" ^
